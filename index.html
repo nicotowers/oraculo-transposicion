@@ -1178,10 +1178,11 @@ const MotorIA = (function(){
       if(!keys.length) throw new Error('SIN_MOTOR');
       
       let attempts = 0;
+      let lastErr = null;
       while(attempts < keys.length) {
         const key = keys[currentGeminiKeyIndex];
         try {
-          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`, {
+          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`, {
             method: 'POST',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
@@ -1193,12 +1194,13 @@ const MotorIA = (function(){
           }
           throw new Error('Respuesta vacía de Gemini');
         } catch(e) {
+          lastErr = e.message;
           console.warn(`Falló la llave Gemini en índice ${currentGeminiKeyIndex}:`, e.message);
           currentGeminiKeyIndex = (currentGeminiKeyIndex + 1) % keys.length;
           attempts++;
         }
       }
-      throw new Error('Todas las llaves Gemini fallaron.');
+      throw new Error(`Fallo de API: ${lastErr}`);
     }
   };
 
