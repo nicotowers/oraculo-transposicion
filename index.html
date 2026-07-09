@@ -3754,8 +3754,7 @@ function switchTab(which){
         uniKey: inpUniKey.value.trim()
       };
       try { localStorage.setItem('oraculo_api_conf', JSON.stringify(conf)); } catch(e) {}
-      alert('¡Configuración guardada! Recarga la página (F5) o cierra y abre el Oráculo para aplicar el nuevo motor.');
-      modal.classList.remove('on');
+      location.reload();
     });
   })();
 </script>
