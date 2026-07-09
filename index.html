@@ -3787,6 +3787,7 @@ function switchTab(which){
       }
       selProv.value = conf.prov || 'gemini';
       inpGemKey.value = conf.geminiKeys || '';
+      if(inpOrKey) inpOrKey.value = conf.orKey || '';
       inpUniUrl.value = conf.uniUrl || 'https://api.groq.com/openai/v1/chat/completions';
       inpUniModel.value = conf.uniModel || 'llama3-70b-8192';
       inpUniKey.value = conf.uniKey || '';
